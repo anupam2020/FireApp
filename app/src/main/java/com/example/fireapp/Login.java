@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,22 +62,28 @@ public class Login extends AppCompatActivity {
                 String email=text1.getText().toString();
                 String pass=text2.getText().toString();
 
+                if(email.isEmpty() || pass.isEmpty())
+                {
+                    Snackbar.make(layout,"Invalid Credentials!",Snackbar.LENGTH_SHORT).show();
+                }
+                else {
+                    auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
 
-                auth.signInWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
+                            Toast.makeText(Login.this, "Login Success!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, Second.class));
+                            finish();
 
-                        Toast.makeText(Login.this,"Login Success!",Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull @NotNull Exception e) {
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull @NotNull Exception e) {
-
-                        Snackbar.make(layout,"Login Failed!",Snackbar.LENGTH_SHORT).show();
-
-                    }
-                });
+                            Snackbar.make(layout, "Login Failed!", Snackbar.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
             }
         });

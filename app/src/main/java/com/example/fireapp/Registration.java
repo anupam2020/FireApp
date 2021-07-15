@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.MenuItem;
@@ -92,6 +93,7 @@ public class Registration extends AppCompatActivity {
                 if(task.isSuccessful())
                 {
                     Snackbar.make(layout,"Registration Successful!",Snackbar.LENGTH_LONG).show();
+                    startActivity(new Intent(Registration.this,Login.class));
                 }
                 else
                 {

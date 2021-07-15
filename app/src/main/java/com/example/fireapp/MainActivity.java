@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseUser user;
 
-    ArrayList<Email> emailList=new ArrayList<Email>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 startActivity(new Intent(MainActivity.this,Login.class));
-                finish();
+                //finish();
             }
         });
 
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 startActivity(new Intent(MainActivity.this,Registration.class));
-                finish();
+                //finish();
             }
         });
 
