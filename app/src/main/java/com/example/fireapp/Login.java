@@ -19,6 +19,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,6 +44,8 @@ public class Login extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+    private FirebaseDatabase database;
+    private DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,18 @@ public class Login extends AppCompatActivity {
 
         auth=FirebaseAuth.getInstance();
 
+        database=FirebaseDatabase.getInstance();
+        reference=database.getReference();
+
+        /*try {
+            Toast.makeText(this,"User: "+FirebaseAuth.getInstance().getCurrentUser().getEmail(),Toast.LENGTH_LONG).show();
+        }
+        catch(Exception e)
+        {
+            Toast.makeText(this,"Exception: "+e,Toast.LENGTH_LONG).show();
+        }*/
+
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +91,7 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onSuccess(AuthResult authResult) {
 
-                            Toast.makeText(Login.this, "Login Success!", Toast.LENGTH_SHORT).show();
+                            DynamicToast.makeSuccess(Login.this,"Login Successful",3000).show();
                             startActivity(new Intent(Login.this, Second.class));
                             finish();
 
@@ -80,7 +100,7 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull @NotNull Exception e) {
 
-                            Snackbar.make(layout, "Login Failed!", Snackbar.LENGTH_SHORT).show();
+                            DynamicToast.makeError(Login.this,"Login Failed",3000).show();
                         }
                     });
                 }
